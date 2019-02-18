@@ -2,7 +2,7 @@
  * @Author: ZXY 
  * @Date: 2019-02-18 08:44:59 
  * @Last Modified by: ZXY
- * @Last Modified time: 2019-02-18 09:32:17
+ * @Last Modified time: 2019-02-18 09:41:14
  */
 
 var gulp = require('gulp'),
@@ -44,6 +44,11 @@ gulp.task('scss', function() {
         .pipe(minCss())
         .pipe(gulp.dest('./src/css'))
 });
+
+gulp.task('bs', function() {
+    return gulp.src('./src/css/**/*.css')
+        .pipe(gulp.dest('./dist/css'))
+});
 // 在gulp中创建js任务编译js文件，合并js，并且压缩（10分）
 gulp.task('js', function() {
     return gulp.src('./src/js/**/*.js')
@@ -53,6 +58,10 @@ gulp.task('js', function() {
         .pipe(concat('all.js'))
         .pipe(gulp.dest('./src/js/min'))
 });
+gulp.task('bjs', function() {
+    return gulp.src('./src/js/min/**/*.js')
+        .pipe(gulp.dest('./dist/js'))
+});
 // 7.在gulp中创建watch任务，进行css文件监听，自动执行对应的任务（10分）；
 gulp.task('watch', function() {
     return gulp.watch('./src/scss/**/*.scss', gulp.series('scss'))
@@ -60,7 +69,4 @@ gulp.task('watch', function() {
 // 8.在gulp中创建default任务，默认执行webserver服务，js，css，watch任务（10分）；
 gulp.task('default', gulp.series('scss', 'js', 'devServer', 'watch'));
 // 9.在gulp中创建build任务，指向js,css任务，并把文件生成到dist文件夹（10分）；
-gulp.task('build', function() {
-    return gulp.src(['./src/css/**/*.css', './src/js/**/*.js'])
-        .pipe(gulp.dest(['./dist/css/**/*.css', './dist/js/**/*.js']))
-});
+gulp.task('build', gulp.parallel('bs', 'bjs'));
