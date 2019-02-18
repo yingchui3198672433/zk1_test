@@ -2,7 +2,7 @@
  * @Author: ZXY 
  * @Date: 2019-02-18 08:44:59 
  * @Last Modified by: ZXY
- * @Last Modified time: 2019-02-18 09:04:09
+ * @Last Modified time: 2019-02-18 09:14:13
  */
 
 var gulp = require('gulp'),
@@ -42,7 +42,7 @@ gulp.task('scss', function() {
     return gulp.src('./src/scss/**/*.scss')
         .pipe(scss())
         .pipe(minCss())
-        .pipe(gulp.dest('./src/css/**/*.css'))
+        .pipe(gulp.dest('./src/css'))
 });
 // 在gulp中创建js任务编译js文件，合并js，并且压缩（10分）
 gulp.task('js', function() {
